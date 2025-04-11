@@ -5,7 +5,7 @@
   <h2>Workout Sessions</h2>
 
   {% for session in session_list %}
-    <h3>{{ session.date }}</h3>
+    <a href="{{ session.get_absolute_url }}"><h3>{{ session.date }}</h3></a>
     {% for workout in session.workout_set.all %}
       <p>{{ workout.exercise }}</p>
       <p>{{ workout.weight }}</p>
