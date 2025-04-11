@@ -1,1 +1,15 @@
-<h1>Hello</h1>
+{% extends "base.html" %}
+
+{% block content %}
+
+  <h2>Workout Sessions</h2>
+
+  {% for session in session_list %}
+    <h3>{{ session.date }}</h3>
+    {% for workout in session.workout_set.all %}
+      <p>{{ workout.exercise }}</p>
+      <p>{{ workout.weight }}</p>
+    {% endfor %}
+  {% endfor %}
+
+{% endblock %}

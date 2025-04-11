@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.views.generic import ListView
 
+from .models import Session
 
-def index(request):
-    return render(request, "home.html")
+class SessionListView(ListView):
+    model = Session
+    template_name = "home.html"

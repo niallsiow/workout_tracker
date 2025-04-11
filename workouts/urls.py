@@ -1,7 +1,7 @@
 from django.urls import path
 
-from .views import index
+from .views import SessionListView
 
 urlpatterns = [
-    path("", index, name="home"),
+    path("", SessionListView.as_view(), name="home"),
 ]
