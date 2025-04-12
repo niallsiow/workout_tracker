@@ -5,7 +5,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 
-from .forms import SessionCreateForm, SessionUpdateForm, WorkoutForm
+from .forms import SessionCreateForm, WorkoutForm
 from .models import Session, Workout
 
 
