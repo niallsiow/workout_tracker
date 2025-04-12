@@ -77,7 +77,6 @@ class SessionDetailViewGet(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         session = get_object_or_404(Session, pk=self.kwargs['pk'])
-        context["session_edit_form"] = SessionUpdateForm(instance=session)
         context["workout_new_form"] = WorkoutForm()
         return context
 
