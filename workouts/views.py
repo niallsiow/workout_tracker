@@ -95,3 +95,14 @@ class SessionDeleteView(DeleteView):
     model = Session
     template_name = "session_delete.html"
     success_url = reverse_lazy("home")
+
+
+class WorkoutUpdateView(UpdateView):
+    model = Workout
+    template_name = "workout_edit.html"
+    fields = ("exercise", "weight")
+
+    def get_success_url(self):
+        workout = get_object_or_404(Workout, pk=self.kwargs["pk"])
+        session = workout.session
+        return reverse("session_detail", kwargs={"pk": session.id})
