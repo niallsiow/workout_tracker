@@ -106,3 +106,13 @@ class WorkoutUpdateView(UpdateView):
         workout = get_object_or_404(Workout, pk=self.kwargs["pk"])
         session = workout.session
         return reverse("session_detail", kwargs={"pk": session.id})
+
+
+class WorkoutDeleteView(DeleteView):
+    model = Workout
+    template_name = "workout_delete.html"
+
+    def get_success_url(self):
+        workout = get_object_or_404(Workout, pk=self.kwargs["pk"])
+        session = workout.session
+        return reverse("session_detail", kwargs={"pk": session.id})
