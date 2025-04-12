@@ -12,6 +12,7 @@
 
   {% for session in session_list %}
     <a href="{{ session.get_absolute_url }}"><h3>{{ session.date }}</h3></a>
+    <p>{{ session.notes }}</p>
     {% for workout in session.workout_set.all %}
       <p>{{ workout.exercise }}</p>
       <p>{{ workout.weight }}</p>
