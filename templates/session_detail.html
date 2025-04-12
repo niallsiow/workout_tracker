@@ -32,4 +32,6 @@
     </div>
   {% endfor %}
 
+  <a href="{% url 'session_delete' session.pk %}">Delete Session</a>
+
 {% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <form action="" method="post">
+    {% csrf_token %}
+    <p>Are you sure you want delete the following session?</p>
+
+    <h3>{{ session.date }}</h3>
+    {% for workout in session.workout_set.all|slice:"0.3" %}
+      <p>{{ workout.exercise }} {{ workout.weight }}</p>
+      <p>
+        {% for set in workout.set_set.all %}
+          1x{{ set.reps }} 
+        {% endfor %}
+      </p>
+    {% endfor %}
+
+    <button type="submit">Delete</button>
+  </form>
+
+{% endblock %}

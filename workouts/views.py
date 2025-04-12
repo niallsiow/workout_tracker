@@ -1,9 +1,9 @@
 from django.views import View
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.detail import SingleObjectMixin
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.shortcuts import get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
 from .forms import SessionCreateForm, WorkoutForm
 from .models import Session, Workout
@@ -89,3 +89,9 @@ class SessionDetailView(View):
     def post(self, request, *args, **kwargs):
         view = WorkoutPost.as_view()
         return view(request, *args, **kwargs)
+
+
+class SessionDeleteView(DeleteView):
+    model = Session
+    template_name = "session_delete.html"
+    success_url = reverse_lazy("home")
