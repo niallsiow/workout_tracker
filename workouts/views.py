@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 
 from .forms import SessionCreateForm, WorkoutForm
-from .models import Session, Workout
+from .models import Session, Workout, Set
 
 
 class SessionListViewGet(ListView):
@@ -76,7 +76,6 @@ class SessionDetailViewGet(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        session = get_object_or_404(Session, pk=self.kwargs['pk'])
         context["workout_new_form"] = WorkoutForm()
         return context
 
@@ -116,3 +115,18 @@ class WorkoutDeleteView(DeleteView):
         workout = get_object_or_404(Workout, pk=self.kwargs["pk"])
         session = workout.session
         return reverse("session_detail", kwargs={"pk": session.id})
+
+    
+class SetCreateView(CreateView):
+    model = Set
+    template_name = "set_new.html"
+    fields = ("reps",)
+
+    def form_valid(self, form):
+        form.instance.workout = get_object_or_404(Workout, pk=self.kwargs["workout_id"])
+        form.save()
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        workout = get_object_or_404(Workout, pk=self.kwargs["workout_id"])
+        return reverse("session_detail", kwargs={"pk": workout.session.id})

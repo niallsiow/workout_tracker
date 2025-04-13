@@ -29,6 +29,8 @@
           <p>1x{{ set.reps }}</p>
         </div>
       {% endfor %}
+      <a href="{% url 'set_new' workout.pk %}">New Set</a>
+      <br><br>
       <a href="{% url 'workout_edit' workout.pk %}">Edit</a> | 
       <a href="{% url 'workout_delete' workout.pk %}">Delete</a>
     </div>
