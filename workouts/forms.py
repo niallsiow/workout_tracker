@@ -12,4 +12,7 @@ class SessionCreateForm(forms.ModelForm):
 class WorkoutForm(forms.ModelForm):
     class Meta:
         model = Workout
-        fields = ("exercise", "weight",)
+        fields = (
+            "exercise",
+            "weight",
+        )

@@ -6,7 +6,7 @@ class Session(models.Model):
     user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
     notes = models.TextField(blank=True)
-    
+
     def get_absolute_url(self):
         return reverse("session_detail", kwargs={"pk": self.id})
 

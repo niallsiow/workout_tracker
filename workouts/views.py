@@ -33,14 +33,14 @@ class SessionPost(FormView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("session_detail", kwargs={"pk": self.object.pk })
+        return reverse("session_detail", kwargs={"pk": self.object.pk})
 
 
 class SessionListView(View):
     def get(self, request, *args, **kwargs):
         view = SessionListViewGet.as_view()
         return view(request, *args, **kwargs)
-    
+
     def post(self, request, *args, **kwargs):
         view = SessionPost.as_view()
         return view(request, *args, **kwargs)
@@ -50,7 +50,7 @@ class SessionUpdateView(UpdateView):
     model = Session
     template_name = "session_edit.html"
     fields = ("notes",)
-    
+
 
 class WorkoutPost(SingleObjectMixin, FormView):
     model = Workout
@@ -65,7 +65,7 @@ class WorkoutPost(SingleObjectMixin, FormView):
         form.instance.session = Session.objects.get(pk=self.session.id)
         form.save()
         return super().form_valid(form)
-    
+
     def get_success_url(self):
         return reverse("session_detail", kwargs={"pk": self.session.pk})
 
@@ -84,7 +84,7 @@ class SessionDetailView(View):
     def get(self, request, *args, **kwargs):
         view = SessionDetailViewGet.as_view()
         return view(request, *args, **kwargs)
-    
+
     def post(self, request, *args, **kwargs):
         view = WorkoutPost.as_view()
         return view(request, *args, **kwargs)
@@ -116,7 +116,7 @@ class WorkoutDeleteView(DeleteView):
         session = workout.session
         return reverse("session_detail", kwargs={"pk": session.id})
 
-    
+
 class SetCreateView(CreateView):
     model = Set
     template_name = "set_new.html"
@@ -126,7 +126,7 @@ class SetCreateView(CreateView):
         form.instance.workout = get_object_or_404(Workout, pk=self.kwargs["workout_id"])
         form.save()
         return super().form_valid(form)
-    
+
     def get_success_url(self):
         workout = get_object_or_404(Workout, pk=self.kwargs["workout_id"])
         return reverse("session_detail", kwargs={"pk": workout.session.id})
