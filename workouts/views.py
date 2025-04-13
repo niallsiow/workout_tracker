@@ -130,3 +130,13 @@ class SetCreateView(CreateView):
     def get_success_url(self):
         workout = get_object_or_404(Workout, pk=self.kwargs["workout_id"])
         return reverse("session_detail", kwargs={"pk": workout.session.id})
+
+
+class SetDeleteView(DeleteView):
+    model = Set
+    template_name = "set_delete.html"
+
+    def get_success_url(self):
+        set = get_object_or_404(Set, pk=self.kwargs["pk"])
+        session = set.workout.session
+        return reverse("session_detail", kwargs={"pk": session.id})

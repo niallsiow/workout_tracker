@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <form action="" method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete the following set?</p>
+    <h3>{{ set.workout }}</h3>
+    <p>1x{{ set.reps }}</p>
+    <button type="submit">Delete</button>
+  </form>
+
+{% endblock %}

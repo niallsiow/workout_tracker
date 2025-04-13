@@ -26,7 +26,7 @@
       <p><b>Sets:</b></p>
       {% for set in workout.set_set.all %}
         <div>
-          <p>1x{{ set.reps }}</p>
+          <p>1x{{ set.reps }} <a href="{% url 'set_delete' set.pk %}">Delete Set</a></p>
         </div>
       {% endfor %}
       <a href="{% url 'set_new' workout.pk %}">New Set</a>

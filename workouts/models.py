@@ -27,7 +27,7 @@ class Workout(models.Model):
     weight = models.DecimalField(max_digits=6, decimal_places=2)
 
     def __str__(self):
-        return f"{self.session}: {self.exercise} {self.weight}"
+        return f"{self.session}: {self.exercise}, {self.weight}kg"
 
 
 class Set(models.Model):
