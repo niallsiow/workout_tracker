@@ -102,7 +102,7 @@ class WorkoutUpdateView(UpdateView):
     fields = ("exercise", "weight")
 
     def get_success_url(self):
-        workout = get_object_or_404(Workout, pk=self.kwargs["pk"])
+        workout = self.object
         session = workout.session
         return reverse("session_detail", kwargs={"pk": session.id})
 
@@ -112,7 +112,7 @@ class WorkoutDeleteView(DeleteView):
     template_name = "workout_delete.html"
 
     def get_success_url(self):
-        workout = get_object_or_404(Workout, pk=self.kwargs["pk"])
+        workout = self.object
         session = workout.session
         return reverse("session_detail", kwargs={"pk": session.id})
 
@@ -128,7 +128,8 @@ class SetCreateView(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        workout = get_object_or_404(Workout, pk=self.kwargs["workout_id"])
+        set = self.object
+        workout = set.workout
         return reverse("session_detail", kwargs={"pk": workout.session.id})
 
 
@@ -138,7 +139,7 @@ class SetUpdateView(UpdateView):
     fields = ("reps",)
 
     def get_success_url(self):
-        set = get_object_or_404(Set, pk=self.kwargs["pk"])
+        set = self.object
         session = set.workout.session
         return reverse("session_detail", kwargs={"pk": session.id})
 
@@ -148,6 +149,6 @@ class SetDeleteView(DeleteView):
     template_name = "set_delete.html"
 
     def get_success_url(self):
-        set = get_object_or_404(Set, pk=self.kwargs["pk"])
+        set = self.object
         session = set.workout.session
         return reverse("session_detail", kwargs={"pk": session.id})
