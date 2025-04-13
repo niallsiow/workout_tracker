@@ -132,6 +132,17 @@ class SetCreateView(CreateView):
         return reverse("session_detail", kwargs={"pk": workout.session.id})
 
 
+class SetUpdateView(UpdateView):
+    model = Set
+    template_name = "set_edit.html"
+    fields = ("reps",)
+
+    def get_success_url(self):
+        set = get_object_or_404(Set, pk=self.kwargs["pk"])
+        session = set.workout.session
+        return reverse("session_detail", kwargs={"pk": session.id})
+
+
 class SetDeleteView(DeleteView):
     model = Set
     template_name = "set_delete.html"

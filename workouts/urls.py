@@ -8,6 +8,7 @@ from .views import (
     WorkoutUpdateView,
     WorkoutDeleteView,
     SetCreateView,
+    SetUpdateView,
     SetDeleteView,
 )
 
@@ -23,5 +24,6 @@ urlpatterns = [
         "<int:pk>/workout_delete/", WorkoutDeleteView.as_view(), name="workout_delete"
     ),
     path("<int:workout_id>/set_new/", SetCreateView.as_view(), name="set_new"),
+    path("<int:pk>/set_edit/", SetUpdateView.as_view(), name="set_edit"),
     path("<int:pk>/set_delete/", SetDeleteView.as_view(), name="set_delete"),
 ]
