@@ -23,6 +23,7 @@
     <div>
       <h3>{{ workout.exercise }}</h3>
       <h4>{{ workout.get_weight }}</h4>
+      <h4>Previous Weight: {{ workout.get_previous_weight }}</h4>
       <p><b>Sets:</b></p>
       {% for set in workout.set_set.all %}
         <div>
