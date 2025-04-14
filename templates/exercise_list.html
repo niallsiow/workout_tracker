@@ -5,6 +5,7 @@
   {% for exercise in exercise_list %}
     {% if exercise.user == request.user %}
       <p>{{ exercise.name }} 
+        <a href="{% url 'exercise_detail' exercise.id %}">View</a> | 
         <a href="{% url 'exercise_edit' exercise.id %}">Edit</a> | 
         <a href="{% url 'exercise_delete' exercise.id %}">Delete</a>
       </p>

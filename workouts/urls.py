@@ -11,6 +11,7 @@ from .views import (
     SetUpdateView,
     SetDeleteView,
     ExerciseListView,
+    ExerciseDetailView,
     ExerciseCreateView,
     ExerciseUpdateView,
     ExerciseDeleteView,
@@ -31,6 +32,11 @@ urlpatterns = [
     path("<int:pk>/set_edit/", SetUpdateView.as_view(), name="set_edit"),
     path("<int:pk>/set_delete/", SetDeleteView.as_view(), name="set_delete"),
     path("exercise_list/", ExerciseListView.as_view(), name="exercise_list"),
+    path(
+        "<int:pk>/exercise_detail/",
+        ExerciseDetailView.as_view(),
+        name="exercise_detail",
+    ),
     path("exercise_new/", ExerciseCreateView.as_view(), name="exercise_new"),
     path("<int:pk>/exercise_edit/", ExerciseUpdateView.as_view(), name="exercise_edit"),
     path(

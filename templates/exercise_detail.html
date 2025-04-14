@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <h2>{{ exercise.name }}</h2>
+  {% for workout in exercise.workout_set.all reversed %}
+    <p>{{ workout.id }}, {{ workout.session.date }}: {{ workout.get_weight }}</p>
+    <p>
+      {% for set in workout.set_set.all %}
+        1x{{ set.reps }} 
+      {% endfor %}
+    </p>
+  {% endfor %}
+
+{% endblock %}

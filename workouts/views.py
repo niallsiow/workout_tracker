@@ -197,6 +197,11 @@ class ExerciseListView(LoginRequiredMixin, ListView):
     template_name = "exercise_list.html"
 
 
+class ExerciseDetailView(LoginRequiredMixin, DetailView):
+    model = Exercise
+    template_name = "exercise_detail.html"
+
+
 class ExerciseCreateView(LoginRequiredMixin, CreateView):
     model = Exercise
     template_name = "exercise_new.html"
