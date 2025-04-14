@@ -190,12 +190,12 @@ class SetDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return reverse("session_detail", kwargs={"pk": session.id})
 
 
-class ExerciseListView(ListView):
+class ExerciseListView(LoginRequiredMixin, ListView):
     model = Exercise
     template_name = "exercise_list.html"
 
 
-class ExerciseCreateView(CreateView):
+class ExerciseCreateView(LoginRequiredMixin, CreateView):
     model = Exercise
     template_name = "exercise_new.html"
     fields = ("name",)
@@ -206,4 +206,29 @@ class ExerciseCreateView(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("home")
+        return reverse("exercise_list")
+
+
+class ExerciseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Exercise
+    template_name = "exercise_edit.html"
+    fields = ("name",)
+
+    def test_func(self):
+        exercise = self.get_object()
+        return exercise.user == self.request.user
+
+    def get_success_url(self):
+        return reverse("exercise_list")        
+
+
+class ExerciseDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Exercise
+    template_name = "exercise_delete.html"
+
+    def test_func(self):
+        exercise = self.get_object()
+        return exercise.user == self.request.user
+    
+    def get_success_url(self):
+        return reverse("exercise_list")

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <form action="" method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete the following exercise and all entries associated with it?</p>
+    <p>{{ exercise.name }}</p>
+    <button type="submit">Delete</button>
+  </form>
+
+{% endblock %}
