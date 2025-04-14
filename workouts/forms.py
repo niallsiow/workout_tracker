@@ -16,6 +16,7 @@ class WorkoutForm(forms.ModelForm):
             "exercise",
             "weight",
         )
+        labels = {"weight": "Weight (kg)"}
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user")
