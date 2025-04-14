@@ -22,9 +22,11 @@
   {% for workout in session.workout_set.all %}
     <div>
       <h3>{{ workout.exercise }}</h3>
-      <h4>{{ workout.get_weight }}</h4>
+      <h4>Current Weight: {{ workout.get_weight }}</h4>
       <h4>Previous Weight: {{ workout.get_previous_weight }}</h4>
-      <p><b>Sets:</b></p>
+      
+      <p>Sets: {{ workout.get_sets }}</p>
+      
       {% for set in workout.set_set.all %}
         <div>
           <p>1x{{ set.reps }} <a href="{% url 'set_edit' set.pk %}">Edit Set</a> | 

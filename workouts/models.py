@@ -56,6 +56,23 @@ class Workout(models.Model):
         )
         return f"{weight} {unit}"
 
+    def get_sets(self):
+        set_objects = Set.objects.filter(workout=self.id)
+
+        set_count = {}
+        for set in set_objects:
+            reps = set.reps
+            if reps in set_count:
+                set_count[reps] += 1
+            else:
+                set_count[reps] = 1
+
+        sets_string = ""
+        for reps, sets in set_count.items():
+            sets_string += f"{sets}x{reps} "
+
+        return sets_string
+
     def __str__(self):
         return f"{self.session}: {self.exercise}, {self.weight}kg"
 
