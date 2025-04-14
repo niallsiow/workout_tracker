@@ -2,22 +2,24 @@
 
 {% block content %}
 
-  <form action="" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">New Session</button>
-  </form>
-
-  <h2>Workout Sessions</h2>
-
-  {% for session in session_list %}
-    {% if session.user.pk == request.user.pk %}
-      <a href="{{ session.get_absolute_url }}"><h3>{{ session.date }}</h3></a>
-      {% for workout in session.workout_set.all %}
-        <p>{{ workout.exercise }}: {{ workout.get_weight }}</p>
-      {% endfor %}
-      <p>{{ session.notes }}</p>
-    {% endif %}
-  {% endfor %}
+  {% if user.is_authenticated %}
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form }}
+      <button type="submit">New Session</button>
+    </form>
+    
+    <h2>Workout Sessions</h2>
+    
+    {% for session in session_list %}
+      {% if session.user.pk == request.user.pk %}
+        <a href="{{ session.get_absolute_url }}"><h3>{{ session.date }}</h3></a>
+        {% for workout in session.workout_set.all %}
+          <p>{{ workout.exercise }}: {{ workout.get_weight }}</p>
+        {% endfor %}
+        <p>{{ session.notes }}</p>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
 
 {% endblock %}

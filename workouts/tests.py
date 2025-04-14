@@ -102,10 +102,12 @@ class SessionDetailViewTests(TestCase):
         cls.session = Session.objects.create(user=cls.user, notes="some notes")
 
     def test_url_exists_at_correct_location_sessiondetailview(self):
+        self.client.login(username="testuser", password="testpass123")
         response = self.client.get("/1/")
         self.assertEqual(response.status_code, 200)
 
     def test_session_detail_view(self):
+        self.client.login(username="testuser", password="testpass123")
         response = self.client.get(
             reverse("session_detail", kwargs={"pk": self.session.id})
         )

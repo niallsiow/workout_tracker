@@ -9,7 +9,7 @@ from .forms import SessionCreateForm, WorkoutForm
 from .models import Session, Workout, Set, Exercise
 
 
-class SessionListViewGet(LoginRequiredMixin, ListView):
+class SessionListViewGet(ListView):
     model = Session
     template_name = "home.html"
 
