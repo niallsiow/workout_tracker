@@ -53,22 +53,22 @@ class SessionUpdateView(LoginRequiredMixin, UpdateView):
     fields = ("notes",)
 
 
-class WorkoutPost(SingleObjectMixin, FormView):
+class WorkoutPost(FormView):
     model = Workout
     form_class = WorkoutForm
     template_name = "session_detail.html"
 
     def post(self, request, *args, **kwargs):
-        self.session = self.get_object()
+        self.session_id = self.kwargs.get("pk")
         return super().post(request, *args, **kwargs)
 
     def form_valid(self, form):
-        form.instance.session = Session.objects.get(pk=self.session.id)
+        form.instance.session = Session.objects.get(pk=self.session_id)
         form.save()
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("session_detail", kwargs={"pk": self.session.pk})
+        return reverse("session_detail", kwargs={"pk": self.session_id})
 
 
 class SessionDetailViewGet(LoginRequiredMixin, DetailView):
