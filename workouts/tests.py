@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 
 from datetime import date
 
-from .models import Session
+from .models import Session, Exercise, Workout
 
 
 class HomePageTests(TestCase):
@@ -28,7 +28,7 @@ class SessionFormTests(TestCase):
         )
         cls.session = Session.objects.create(user=cls.user, notes="some notes")
 
-    def test_model_content(self):
+    def test_session_model_content(self):
         test_session = Session.objects.last()
         self.assertEqual(test_session.user.username, "testuser")
         self.assertEqual(test_session.user.email, "testuser@email.com")
@@ -117,3 +117,73 @@ class SessionDetailViewTests(TestCase):
             response, date_format(date.today(), format=settings.DATE_FORMAT)
         )
         self.assertContains(response, "some notes")
+
+
+class WorkoutFormTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.user = get_user_model().objects.create_user(
+            username="testuser", email="testuser@email.com", password="testpass123"
+        )
+        cls.session = Session.objects.create(user=cls.user, notes="some notes")
+        cls.exercise = Exercise.objects.create(user=cls.user, name="Deadlift")
+        cls.workout = Workout.objects.create(
+            session=cls.session, exercise=cls.exercise, weight=100
+        )
+
+    def test_workout_model_content(self):
+        test_workout = Workout.objects.last()
+        self.assertEqual(test_workout.session.notes, "some notes")
+        self.assertEqual(test_workout.exercise.name, "Deadlift")
+        self.assertEqual(test_workout.weight, 100)
+
+    def test_workout_createview(self):
+        self.client.login(username="testuser", password="testpass123")
+
+        response = self.client.post(
+            reverse("session_detail", kwargs={"pk": self.session.id}),
+            {"exercise": self.exercise.id, "weight": 50},
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(
+            response, reverse("session_detail", kwargs={"pk": self.session.id})
+        )
+        workout = Workout.objects.last()
+        self.assertEqual(workout.weight, 50)
+
+    def test_workout_updateview(self):
+        self.client.login(username="testuser", password="testpass123")
+        workout = Workout.objects.create(
+            session=self.session, exercise=self.exercise, weight=10
+        )
+
+        response = self.client.get(reverse("workout_edit", kwargs={"pk": workout.id}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "workout_edit.html")
+        self.assertContains(response, "10")
+
+        response = self.client.post(
+            reverse("workout_edit", kwargs={"pk": workout.id}), {"exercise": self.exercise.id, "weight": 25}
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(
+            response, reverse("session_detail", kwargs={"pk": self.session.id})
+        )
+        workout = Workout.objects.get(id=workout.id)
+        self.assertEqual(workout.weight, 25)
+
+    def test_workout_deleteview(self):
+        self.client.login(username="testuser", password="testpass123")
+        new_workout = Workout.objects.create(
+            session=self.session, exercise=self.exercise, weight=30
+        )
+        self.assertTrue(Workout.objects.filter(id=new_workout.id).exists())
+
+        response = self.client.get(reverse("workout_delete", kwargs={"pk": new_workout.id}))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "workout_delete.html")
+
+        response = self.client.post(reverse("workout_delete", kwargs={"pk": new_workout.id}))
+        self.assertFalse(Workout.objects.filter(id=new_workout.id).exists())
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse("session_detail", kwargs={"pk": new_workout.session.id}))
