@@ -6,7 +6,7 @@ from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from .forms import SessionCreateForm, WorkoutForm
-from .models import Session, Workout, Set
+from .models import Session, Workout, Set, Exercise
 
 
 class SessionListViewGet(LoginRequiredMixin, ListView):
@@ -185,3 +185,12 @@ class SetDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         set = self.object
         session = set.workout.session
         return reverse("session_detail", kwargs={"pk": session.id})
+
+
+class ExerciseCreateView(CreateView):
+    model = Exercise
+    template_name = "exercise_new.html"
+    fields = ("name",)
+
+    def get_success_url(self):
+        return reverse("home")
