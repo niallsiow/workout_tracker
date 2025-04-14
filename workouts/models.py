@@ -23,7 +23,7 @@ class Exercise(models.Model):
 
 class Workout(models.Model):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
-    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
+    exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE) # Units for weight are kg
     weight = models.DecimalField(max_digits=6, decimal_places=2)
 
     def __str__(self):
