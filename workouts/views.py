@@ -221,7 +221,7 @@ class ExerciseUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return exercise.user == self.request.user
 
     def get_success_url(self):
-        return reverse("exercise_list")        
+        return reverse("exercise_list")
 
 
 class ExerciseDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -231,6 +231,6 @@ class ExerciseDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self):
         exercise = self.get_object()
         return exercise.user == self.request.user
-    
+
     def get_success_url(self):
         return reverse("exercise_list")

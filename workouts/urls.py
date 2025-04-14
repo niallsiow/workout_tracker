@@ -33,5 +33,9 @@ urlpatterns = [
     path("exercise_list/", ExerciseListView.as_view(), name="exercise_list"),
     path("exercise_new/", ExerciseCreateView.as_view(), name="exercise_new"),
     path("<int:pk>/exercise_edit/", ExerciseUpdateView.as_view(), name="exercise_edit"),
-    path("<int:pk>/exercise_delete/", ExerciseDeleteView.as_view(), name="exercise_delete"),
+    path(
+        "<int:pk>/exercise_delete/",
+        ExerciseDeleteView.as_view(),
+        name="exercise_delete",
+    ),
 ]

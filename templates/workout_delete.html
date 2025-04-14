@@ -6,7 +6,7 @@
     {% csrf_token %}
 
     <p>Are you sure you want to delete the following workout?</p>
-    <h3>{{ workout.exercise }} {{ workout.weight }}</h3>
+    <h3>{{ workout.exercise }} {{ workout.get_weight }}</h3>
     <p>
       {% for set in workout.set_set.all %}
       1x{{ set.reps }} 

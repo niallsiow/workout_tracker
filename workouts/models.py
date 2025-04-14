@@ -28,6 +28,15 @@ class Workout(models.Model):
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
     weight = models.DecimalField(max_digits=6, decimal_places=2)
 
+    def get_weight(self):
+        unit = "kg"
+        weight = (
+            str(int(self.weight))
+            if self.weight == int(self.weight)
+            else str(self.weight)
+        )
+        return f"{weight} {unit}"
+
     def __str__(self):
         return f"{self.session}: {self.exercise}, {self.weight}kg"
 

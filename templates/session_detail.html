@@ -22,7 +22,7 @@
   {% for workout in session.workout_set.all %}
     <div>
       <h3>{{ workout.exercise }}</h3>
-      <h4>{{ workout.weight }}</h4>
+      <h4>{{ workout.get_weight }}</h4>
       <p><b>Sets:</b></p>
       {% for set in workout.set_set.all %}
         <div>
