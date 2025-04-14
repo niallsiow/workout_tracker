@@ -11,12 +11,14 @@
   <h2>Workout Sessions</h2>
 
   {% for session in session_list %}
-    <a href="{{ session.get_absolute_url }}"><h3>{{ session.date }}</h3></a>
-    <p>{{ session.notes }}</p>
-    {% for workout in session.workout_set.all %}
-      <p>{{ workout.exercise }}</p>
-      <p>{{ workout.weight }}</p>
-    {% endfor %}
+    {% if session.user.pk == request.user.pk %}
+      <a href="{{ session.get_absolute_url }}"><h3>{{ session.date }}</h3></a>
+      <p>{{ session.notes }}</p>
+      {% for workout in session.workout_set.all %}
+        <p>{{ workout.exercise }}</p>
+       <p>{{ workout.weight }}</p>
+      {% endfor %}
+    {% endif %}
   {% endfor %}
 
 {% endblock %}
