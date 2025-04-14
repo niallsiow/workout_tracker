@@ -1,9 +1,8 @@
 from django.views import View
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, DetailView, FormView
-from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from .forms import SessionCreateForm, WorkoutForm
@@ -47,12 +46,6 @@ class SessionListView(View):
         return view(request, *args, **kwargs)
 
 
-class SessionUpdateView(LoginRequiredMixin, UpdateView):
-    model = Session
-    template_name = "session_edit.html"
-    fields = ("notes",)
-
-
 class WorkoutPost(FormView):
     model = Workout
     form_class = WorkoutForm
@@ -71,9 +64,13 @@ class WorkoutPost(FormView):
         return reverse("session_detail", kwargs={"pk": self.session_id})
 
 
-class SessionDetailViewGet(LoginRequiredMixin, DetailView):
+class SessionDetailViewGet(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Session
     template_name = "session_detail.html"
+
+    def test_func(self):
+        session = self.get_object()
+        return session.user == self.request.user
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -91,37 +88,64 @@ class SessionDetailView(View):
         return view(request, *args, **kwargs)
 
 
-class SessionDeleteView(LoginRequiredMixin, DeleteView):
+class SessionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Session
+    template_name = "session_edit.html"
+    fields = ("notes",)
+
+    def test_func(self):
+        session = self.get_object()
+        return session.user == self.request.user
+
+
+class SessionDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Session
     template_name = "session_delete.html"
     success_url = reverse_lazy("home")
 
+    def test_func(self):
+        session = self.get_object()
+        return session.user == self.request.user
 
-class WorkoutUpdateView(LoginRequiredMixin, UpdateView):
+
+class WorkoutUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Workout
     template_name = "workout_edit.html"
     fields = ("exercise", "weight")
 
+    def test_func(self):
+        workout = self.get_object()
+        return workout.session.user == self.request.user
+
     def get_success_url(self):
         workout = self.object
         session = workout.session
         return reverse("session_detail", kwargs={"pk": session.id})
 
 
-class WorkoutDeleteView(LoginRequiredMixin, DeleteView):
+class WorkoutDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Workout
     template_name = "workout_delete.html"
 
+    def test_func(self):
+        workout = self.get_object()
+        return workout.session.user == self.request.user
+
     def get_success_url(self):
         workout = self.object
         session = workout.session
         return reverse("session_detail", kwargs={"pk": session.id})
 
 
-class SetCreateView(LoginRequiredMixin, CreateView):
+class SetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Set
     template_name = "set_new.html"
     fields = ("reps",)
+
+    def test_func(self):
+        workout_id = self.kwargs.get("workout_id")
+        workout = get_object_or_404(Workout, pk=self.kwargs["workout_id"])
+        return workout.session.user == self.request.user
 
     def form_valid(self, form):
         form.instance.workout = get_object_or_404(Workout, pk=self.kwargs["workout_id"])
@@ -134,10 +158,14 @@ class SetCreateView(LoginRequiredMixin, CreateView):
         return reverse("session_detail", kwargs={"pk": workout.session.id})
 
 
-class SetUpdateView(LoginRequiredMixin, UpdateView):
+class SetUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Set
     template_name = "set_edit.html"
     fields = ("reps",)
+
+    def test_func(self):
+        set = self.get_object()
+        return set.workout.session.user == self.request.user
 
     def get_success_url(self):
         set = self.object
@@ -145,9 +173,13 @@ class SetUpdateView(LoginRequiredMixin, UpdateView):
         return reverse("session_detail", kwargs={"pk": session.id})
 
 
-class SetDeleteView(LoginRequiredMixin, DeleteView):
+class SetDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Set
     template_name = "set_delete.html"
+
+    def test_func(self):
+        set = self.get_object()
+        return set.workout.session.user == self.request.user
 
     def get_success_url(self):
         set = self.object
