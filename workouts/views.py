@@ -200,5 +200,10 @@ class ExerciseCreateView(CreateView):
     template_name = "exercise_new.html"
     fields = ("name",)
 
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.save()
+        return super().form_valid(form)
+
     def get_success_url(self):
         return reverse("home")
