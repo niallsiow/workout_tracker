@@ -190,6 +190,11 @@ class SetDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return reverse("session_detail", kwargs={"pk": session.id})
 
 
+class ExerciseListView(ListView):
+    model = Exercise
+    template_name = "exercise_list.html"
+
+
 class ExerciseCreateView(CreateView):
     model = Exercise
     template_name = "exercise_new.html"

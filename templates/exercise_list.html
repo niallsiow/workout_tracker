@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  {% for exercise in exercise_list %}
+    {% if exercise.user == request.user %}
+      <p>{{ exercise.name }}</p>
+    {% endif %}
+  {% endfor %}
+
+{% endblock %}

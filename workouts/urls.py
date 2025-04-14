@@ -10,6 +10,7 @@ from .views import (
     SetCreateView,
     SetUpdateView,
     SetDeleteView,
+    ExerciseListView,
     ExerciseCreateView,
 )
 
@@ -27,5 +28,6 @@ urlpatterns = [
     path("<int:workout_id>/set_new/", SetCreateView.as_view(), name="set_new"),
     path("<int:pk>/set_edit/", SetUpdateView.as_view(), name="set_edit"),
     path("<int:pk>/set_delete/", SetDeleteView.as_view(), name="set_delete"),
+    path("exercise_list/", ExerciseListView.as_view(), name="exercise_list"),
     path("exercise_new/", ExerciseCreateView.as_view(), name="exercise_new"),
 ]
