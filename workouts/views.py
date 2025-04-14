@@ -1,15 +1,16 @@
 from django.views import View
+from django.shortcuts import get_object_or_404
+from django.urls import reverse, reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.shortcuts import get_object_or_404
-from django.urls import reverse, reverse_lazy
 
 from .forms import SessionCreateForm, WorkoutForm
 from .models import Session, Workout, Set
 
 
-class SessionListViewGet(ListView):
+class SessionListViewGet(LoginRequiredMixin, ListView):
     model = Session
     template_name = "home.html"
 
@@ -46,7 +47,7 @@ class SessionListView(View):
         return view(request, *args, **kwargs)
 
 
-class SessionUpdateView(UpdateView):
+class SessionUpdateView(LoginRequiredMixin, UpdateView):
     model = Session
     template_name = "session_edit.html"
     fields = ("notes",)
@@ -70,7 +71,7 @@ class WorkoutPost(SingleObjectMixin, FormView):
         return reverse("session_detail", kwargs={"pk": self.session.pk})
 
 
-class SessionDetailViewGet(DetailView):
+class SessionDetailViewGet(LoginRequiredMixin, DetailView):
     model = Session
     template_name = "session_detail.html"
 
@@ -90,13 +91,13 @@ class SessionDetailView(View):
         return view(request, *args, **kwargs)
 
 
-class SessionDeleteView(DeleteView):
+class SessionDeleteView(LoginRequiredMixin, DeleteView):
     model = Session
     template_name = "session_delete.html"
     success_url = reverse_lazy("home")
 
 
-class WorkoutUpdateView(UpdateView):
+class WorkoutUpdateView(LoginRequiredMixin, UpdateView):
     model = Workout
     template_name = "workout_edit.html"
     fields = ("exercise", "weight")
@@ -107,7 +108,7 @@ class WorkoutUpdateView(UpdateView):
         return reverse("session_detail", kwargs={"pk": session.id})
 
 
-class WorkoutDeleteView(DeleteView):
+class WorkoutDeleteView(LoginRequiredMixin, DeleteView):
     model = Workout
     template_name = "workout_delete.html"
 
@@ -117,7 +118,7 @@ class WorkoutDeleteView(DeleteView):
         return reverse("session_detail", kwargs={"pk": session.id})
 
 
-class SetCreateView(CreateView):
+class SetCreateView(LoginRequiredMixin, CreateView):
     model = Set
     template_name = "set_new.html"
     fields = ("reps",)
@@ -133,7 +134,7 @@ class SetCreateView(CreateView):
         return reverse("session_detail", kwargs={"pk": workout.session.id})
 
 
-class SetUpdateView(UpdateView):
+class SetUpdateView(LoginRequiredMixin, UpdateView):
     model = Set
     template_name = "set_edit.html"
     fields = ("reps",)
@@ -144,7 +145,7 @@ class SetUpdateView(UpdateView):
         return reverse("session_detail", kwargs={"pk": session.id})
 
 
-class SetDeleteView(DeleteView):
+class SetDeleteView(LoginRequiredMixin, DeleteView):
     model = Set
     template_name = "set_delete.html"
 
