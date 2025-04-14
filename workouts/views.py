@@ -51,12 +51,14 @@ class WorkoutPost(FormView):
     form_class = WorkoutForm
     template_name = "session_detail.html"
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
+
     def post(self, request, *args, **kwargs):
         self.session_id = self.kwargs.get("pk")
         return super().post(request, *args, **kwargs)
-
-    def get_form_kwargs(self):
-        print("in get form kwargs")
 
     def form_valid(self, form):
         form.instance.session = Session.objects.get(pk=self.session_id)
