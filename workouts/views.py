@@ -55,6 +55,9 @@ class WorkoutPost(FormView):
         self.session_id = self.kwargs.get("pk")
         return super().post(request, *args, **kwargs)
 
+    def get_form_kwargs(self):
+        print("in get form kwargs")
+
     def form_valid(self, form):
         form.instance.session = Session.objects.get(pk=self.session_id)
         form.save()
@@ -74,7 +77,7 @@ class SessionDetailViewGet(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["workout_new_form"] = WorkoutForm()
+        context["workout_new_form"] = WorkoutForm(user=self.request.user)
         return context
 
 
