@@ -125,7 +125,7 @@ class WorkoutDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 class WorkoutUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Workout
     template_name = "workout_edit.html"
-    fields = ("exercise", "working_weight", "weight", "sets", "reps")
+    fields = ("exercise", "working_weight", "next_weight", "next_sets", "next_reps")
 
     def test_func(self):
         workout = self.get_object()
