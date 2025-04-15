@@ -61,7 +61,7 @@ class Workout(models.Model):
         sets_string = ""
         for reps, sets in set_count.items():
             sets_string += f"{sets}x{reps} "
-        return sets_string
+        return sets_string if sets_string else "No Sets Found"
 
     def __str__(self):
         return f"{self.session}: {self.exercise}, {self.weight}kg"

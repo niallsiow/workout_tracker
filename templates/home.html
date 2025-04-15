@@ -15,7 +15,7 @@
       {% if session.user.pk == request.user.pk %}
         <a href="{{ session.get_absolute_url }}"><h3>{{ session.date }}</h3></a>
         {% for workout in session.workout_set.all %}
-          <p>{{ workout.exercise }}: {{ workout.get_weight }}</p>
+          <p>{{ workout.exercise }}: {{ workout.get_weight }} - {{ workout.get_sets }}</p>
         {% endfor %}
         <p>{{ session.notes }}</p>
       {% endif %}
