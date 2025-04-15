@@ -36,7 +36,6 @@ class Workout(models.Model):
             .filter(id__lt=self.id)
             .last()
         )
-        print(previous_workout)
         return previous_workout
 
     def get_weight(self):
