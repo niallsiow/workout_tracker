@@ -21,14 +21,17 @@
   <p>{{ session.date }}</p>
   {% for workout in session.workout_set.all %}
     <div>
-      <h3><a href="{% url 'workout_detail' workout.pk %}">{{ workout.exercise }}</a></h3>
-      <h4>Current Working Weight: {{ workout.get_weight }}</h4>
-      <h4>Previous Working Weight: {{ workout.get_previous_weight }}</h4>
-      <p>Sets: {{ workout.get_sets }}</p>
+      <h3><a href="{% url 'workout_detail' workout.pk %}">{{ workout.exercise }}, {{ workout.get_weight }} {{ workout.get_sets }}</a></h3>
+      
+
+      {% if workout.get_previous_workout %}
+        <h4>Previous Workout: {{ workout.get_previous_workout.get_weight }} {{ workout.get_previous_workout.get_sets }}</h4>
+      {% else %}
+        <h4>No Previous Workout</h4>
+      {% endif %}
+
     </div>
   {% endfor %}
-
-  <br>
 
   <a href="{% url 'session_delete' session.pk %}">Delete Session</a>
 

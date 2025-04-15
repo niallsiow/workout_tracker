@@ -28,7 +28,7 @@ class Workout(models.Model):
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
     weight = models.DecimalField(max_digits=6, decimal_places=2)
 
-    def get_previous_weight(self):
+    def get_previous_workout(self):
         previous_workout = (
             Workout.objects.filter(
                 session__user=self.session.user, exercise=self.exercise
@@ -36,16 +36,8 @@ class Workout(models.Model):
             .filter(id__lt=self.id)
             .last()
         )
-        if previous_workout:
-            unit = "kg"
-            previous_weight = str(
-                int(previous_workout.weight)
-                if previous_workout.weight == int(previous_workout.weight)
-                else str(previous_workout.weight)
-            )
-            return f"{previous_weight} kg"
-        else:
-            return "N/A"
+        print(previous_workout)
+        return previous_workout
 
     def get_weight(self):
         unit = "kg"
@@ -70,7 +62,6 @@ class Workout(models.Model):
         sets_string = ""
         for reps, sets in set_count.items():
             sets_string += f"{sets}x{reps} "
-
         return sets_string
 
     def __str__(self):
