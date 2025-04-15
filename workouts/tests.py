@@ -144,12 +144,12 @@ class WorkoutFormTests(TestCase):
             reverse("session_detail", kwargs={"pk": self.session.id}),
             {"exercise": self.exercise.id, "weight": 50},
         )
+        new_workout = Workout.objects.last()
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(
-            response, reverse("session_detail", kwargs={"pk": self.session.id})
+            response, reverse("workout_detail", kwargs={"pk": new_workout.id})
         )
-        workout = Workout.objects.last()
-        self.assertEqual(workout.weight, 50)
+        self.assertEqual(new_workout.weight, 50)
 
     def test_workout_updateview(self):
         self.client.login(username="testuser", password="testpass123")

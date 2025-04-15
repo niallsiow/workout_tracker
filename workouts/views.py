@@ -29,11 +29,11 @@ class SessionPost(FormView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        self.object = form.save()
+        self.session = form.save()
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("session_detail", kwargs={"pk": self.object.pk})
+        return reverse("session_detail", kwargs={"pk": self.session.pk})
 
 
 class SessionListView(View):
@@ -62,11 +62,11 @@ class WorkoutPost(FormView):
 
     def form_valid(self, form):
         form.instance.session = Session.objects.get(pk=self.session_id)
-        form.save()
+        self.workout = form.save()
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("session_detail", kwargs={"pk": self.session_id})
+        return reverse("workout_detail", kwargs={"pk": self.workout.id})
 
 
 class SessionDetailViewGet(LoginRequiredMixin, UserPassesTestMixin, DetailView):
