@@ -68,6 +68,12 @@ class Workout(models.Model):
             sets_string += f"{sets}x{reps} "
         return sets_string if sets_string else "No Sets Found"
 
+    def get_next_workout_choices(self):
+        next_workout_choices = f"weight: {self.NEXT_WORKOUT_CHOICES[self.next_weight]}"
+        next_workout_choices += f", sets: {self.NEXT_WORKOUT_CHOICES[self.next_sets]}"
+        next_workout_choices += f", reps: {self.NEXT_WORKOUT_CHOICES[self.next_reps]}"
+        return next_workout_choices
+
     def __str__(self):
         return f"{self.session}: {self.exercise}, {self.working_weight}kg"
 

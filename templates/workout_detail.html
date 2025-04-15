@@ -4,11 +4,13 @@
 
   <h2><a href="{% url 'session_detail' workout.session.pk %}">{{workout.session.date }}</a>: {{ workout.exercise }} {{ workout.get_working_weight }} - {{ workout.get_sets }}</h2>
 
+  <h3>Next Workout Goals = {{ workout.get_next_workout_choices }}</h3>
+
   <a href="{% url 'workout_edit' workout.pk %}">Edit</a> | 
   <a href="{% url 'workout_delete' workout.pk %}">Delete</a>
 
   {% if workout.get_previous_workout %}
-    <h4>Previous Workout: {{ workout.get_previous_workout.get_working_weight }} - {{ workout.get_previous_workout.get_sets }}</h4>
+    <h4>Previous Workout: {{ workout.get_previous_workout.get_working_weight }} - {{ workout.get_previous_workout.get_sets }} ({{ workout.get_previous_workout.get_next_workout_choices }})</h4>
   {% else %}
     <h4>No Previous Workout</h4>
   {% endif %}
