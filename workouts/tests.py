@@ -169,9 +169,9 @@ class WorkoutFormTests(TestCase):
             {
                 "exercise": self.exercise.id,
                 "working_weight": 25,
-                "weight": 1,
-                "sets": 1,
-                "reps": 1,
+                "next_weight": 1,
+                "next_sets": 1,
+                "next_reps": 1,
             },
         )
         self.assertEqual(response.status_code, 302)
