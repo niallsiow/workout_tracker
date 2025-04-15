@@ -153,24 +153,24 @@ class WorkoutFormTests(TestCase):
 
     def test_workout_updateview(self):
         self.client.login(username="testuser", password="testpass123")
-        workout = Workout.objects.create(
+        new_workout = Workout.objects.create(
             session=self.session, exercise=self.exercise, weight=10
         )
 
-        response = self.client.get(reverse("workout_edit", kwargs={"pk": workout.id}))
+        response = self.client.get(reverse("workout_edit", kwargs={"pk": new_workout.id}))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "workout_edit.html")
         self.assertContains(response, "10")
 
         response = self.client.post(
-            reverse("workout_edit", kwargs={"pk": workout.id}), {"exercise": self.exercise.id, "weight": 25}
+            reverse("workout_edit", kwargs={"pk": new_workout.id}), {"exercise": self.exercise.id, "weight": 25}
         )
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(
-            response, reverse("session_detail", kwargs={"pk": self.session.id})
+            response, reverse("workout_detail", kwargs={"pk": new_workout.id})
         )
-        workout = Workout.objects.get(id=workout.id)
-        self.assertEqual(workout.weight, 25)
+        edited_workout = Workout.objects.get(id=new_workout.id)
+        self.assertEqual(edited_workout.weight, 25)
 
     def test_workout_deleteview(self):
         self.client.login(username="testuser", password="testpass123")

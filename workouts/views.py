@@ -113,6 +113,15 @@ class SessionDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return session.user == self.request.user
 
 
+class WorkoutDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    model = Workout
+    template_name = "workout_detail.html"
+
+    def test_func(self):
+        workout = self.get_object()
+        return workout.session.user == self.request.user
+
+
 class WorkoutUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Workout
     template_name = "workout_edit.html"
@@ -124,8 +133,7 @@ class WorkoutUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def get_success_url(self):
         workout = self.object
-        session = workout.session
-        return reverse("session_detail", kwargs={"pk": session.id})
+        return reverse("workout_detail", kwargs={"pk": workout.id})
 
 
 class WorkoutDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -160,7 +168,7 @@ class SetCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def get_success_url(self):
         set = self.object
         workout = set.workout
-        return reverse("session_detail", kwargs={"pk": workout.session.id})
+        return reverse("workout_detail", kwargs={"pk": workout.id})
 
 
 class SetUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -174,8 +182,8 @@ class SetUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def get_success_url(self):
         set = self.object
-        session = set.workout.session
-        return reverse("session_detail", kwargs={"pk": session.id})
+        workout = set.workout
+        return reverse("workout_detail", kwargs={"pk": workout.id})
 
 
 class SetDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -188,8 +196,8 @@ class SetDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def get_success_url(self):
         set = self.object
-        session = set.workout.session
-        return reverse("session_detail", kwargs={"pk": session.id})
+        workout = set.workout
+        return reverse("workout_detail", kwargs={"pk": workout.id})
 
 
 class ExerciseListView(LoginRequiredMixin, ListView):
