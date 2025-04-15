@@ -166,7 +166,13 @@ class WorkoutFormTests(TestCase):
 
         response = self.client.post(
             reverse("workout_edit", kwargs={"pk": new_workout.id}),
-            {"exercise": self.exercise.id, "working_weight": 25},
+            {
+                "exercise": self.exercise.id,
+                "working_weight": 25,
+                "weight": 1,
+                "sets": 1,
+                "reps": 1,
+            },
         )
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(

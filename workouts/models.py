@@ -27,6 +27,11 @@ class Workout(models.Model):
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
     # Units for weight are kg
     working_weight = models.DecimalField(max_digits=6, decimal_places=2)
+    # Fields for noting parameters to increase/decrease next workout
+    NEXT_WORKOUT_CHOICES = {0: "no change", 1: "increase", 2: "decrease"}
+    weight = models.IntegerField(choices=NEXT_WORKOUT_CHOICES, default=0)
+    sets = models.IntegerField(choices=NEXT_WORKOUT_CHOICES, default=0)
+    reps = models.IntegerField(choices=NEXT_WORKOUT_CHOICES, default=0)
 
     def get_previous_workout(self):
         previous_workout = (
