@@ -5,6 +5,8 @@ FROM python:${PYTHON_VERSION}
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+ENV DATABASE_URL "sqlite://:memory:"
+
 # install psycopg2 dependencies.
 RUN apt-get update && apt-get install -y \
     libpq-dev \
