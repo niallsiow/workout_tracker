@@ -25,7 +25,9 @@ urlpatterns = [
     path(
         "<int:pk>/session_delete/", SessionDeleteView.as_view(), name="session_delete"
     ),
-    path("<int:pk>/workout_detail/", WorkoutDetailView.as_view(), name="workout_detail"),
+    path(
+        "<int:pk>/workout_detail/", WorkoutDetailView.as_view(), name="workout_detail"
+    ),
     path("<int:pk>/workout_edit/", WorkoutUpdateView.as_view(), name="workout_edit"),
     path(
         "<int:pk>/workout_delete/", WorkoutDeleteView.as_view(), name="workout_delete"

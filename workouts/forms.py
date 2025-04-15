@@ -14,9 +14,9 @@ class WorkoutForm(forms.ModelForm):
         model = Workout
         fields = (
             "exercise",
-            "weight",
+            "working_weight",
         )
-        labels = {"weight": "Weight (kg)"}
+        labels = {"working_weight": "Weight (kg)"}
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user")

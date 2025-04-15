@@ -24,9 +24,9 @@ class Exercise(models.Model):
 
 class Workout(models.Model):
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
-    # Units for weight are kg
     exercise = models.ForeignKey(Exercise, on_delete=models.CASCADE)
-    weight = models.DecimalField(max_digits=6, decimal_places=2)
+    # Units for weight are kg
+    working_weight = models.DecimalField(max_digits=6, decimal_places=2)
 
     def get_previous_workout(self):
         previous_workout = (
@@ -38,14 +38,14 @@ class Workout(models.Model):
         )
         return previous_workout
 
-    def get_weight(self):
+    def get_working_weight(self):
         unit = "kg"
-        weight = (
-            str(int(self.weight))
-            if self.weight == int(self.weight)
-            else str(self.weight)
+        working_weight = (
+            str(int(self.working_weight))
+            if self.working_weight == int(self.working_weight)
+            else str(self.working_weight)
         )
-        return f"{weight} {unit}"
+        return f"{working_weight} {unit}"
 
     def get_sets(self):
         set_objects = Set.objects.filter(workout=self.id)
@@ -64,7 +64,7 @@ class Workout(models.Model):
         return sets_string if sets_string else "No Sets Found"
 
     def __str__(self):
-        return f"{self.session}: {self.exercise}, {self.weight}kg"
+        return f"{self.session}: {self.exercise}, {self.working_weight}kg"
 
 
 class Set(models.Model):

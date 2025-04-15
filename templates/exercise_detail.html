@@ -4,7 +4,7 @@
 
   <h2>{{ exercise.name }}</h2>
   {% for workout in exercise.workout_set.all reversed %}
-    <p>{{ workout.id }}, {{ workout.session.date }}: {{ workout.get_weight }} - {{ workout.get_sets }}</p>
+    <p>{{ workout.id }}, {{ workout.session.date }}: {{ workout.get_working_weight }} - {{ workout.get_sets }}</p>
   {% endfor %}
 
 {% endblock %}

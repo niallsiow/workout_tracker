@@ -21,11 +21,11 @@
   <p>{{ session.date }}</p>
   {% for workout in session.workout_set.all %}
     <div>
-      <h3><a href="{% url 'workout_detail' workout.pk %}">{{ workout.exercise }}, {{ workout.get_weight }} - {{ workout.get_sets }}</a></h3>
+      <h3><a href="{% url 'workout_detail' workout.pk %}">{{ workout.exercise }}, {{ workout.get_working_weight }} - {{ workout.get_sets }}</a></h3>
       
 
       {% if workout.get_previous_workout %}
-        <h4>Previous Workout: {{ workout.get_previous_workout.get_weight }} - {{ workout.get_previous_workout.get_sets }}</h4>
+        <h4>Previous Workout: {{ workout.get_previous_workout.get_working_weight }} - {{ workout.get_previous_workout.get_sets }}</h4>
       {% else %}
         <h4>No Previous Workout</h4>
       {% endif %}

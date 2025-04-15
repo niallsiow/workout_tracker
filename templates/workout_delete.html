@@ -6,7 +6,7 @@
     {% csrf_token %}
 
     <p>Are you sure you want to delete the following workout?</p>
-    <h3>{{ workout.exercise }} {{ workout.get_weight }}</h3>
+    <h3>{{ workout.exercise }} {{ workout.get_working_weight }}</h3>
     <p>Sets: {{ workout.get_sets }}</p>
 
     <button type="submit">Delete</button>
