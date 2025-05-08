@@ -69,10 +69,22 @@ class Workout(models.Model):
         return sets_string if sets_string else "No Sets Found"
 
     def get_next_workout_choices(self):
-        next_workout_choices = f"weight: {self.NEXT_WORKOUT_CHOICES[self.next_weight]}"
-        next_workout_choices += f", sets: {self.NEXT_WORKOUT_CHOICES[self.next_sets]}"
-        next_workout_choices += f", reps: {self.NEXT_WORKOUT_CHOICES[self.next_reps]}"
-        return next_workout_choices
+        next_workout_choices = ""
+        if self.next_weight != 0:
+            next_workout_choices += f"{self.NEXT_WORKOUT_CHOICES[self.next_weight].capitalize()} Weight"
+        if self.next_sets != 0:    
+            if next_workout_choices == "":
+                next_workout_choices += f"{self.NEXT_WORKOUT_CHOICES[self.next_sets].capitalize()} Sets"
+            else:
+                next_workout_choices += f", {self.NEXT_WORKOUT_CHOICES[self.next_sets].capitalize()} Sets"
+        if self.next_reps != 0:
+            if next_workout_choices == "":
+                next_workout_choices += f"{self.NEXT_WORKOUT_CHOICES[self.next_reps].capitalize()} Reps"
+            else:
+                next_workout_choices += f", {self.NEXT_WORKOUT_CHOICES[self.next_reps].capitalize()} Reps"
+        if next_workout_choices == "":
+            return "No Goal For Next Workout"
+        return "Goal For Next Workout = " + next_workout_choices
 
     def __str__(self):
         return f"{self.session}: {self.exercise}, {self.working_weight}kg"
