@@ -3,9 +3,10 @@
 {% block content %}
 
   
-  <h2><a href="{% url 'session_detail' workout.session.pk %}">{{workout.session.date }}</a>: {{ workout.exercise.name }} {{ workout.get_working_weight }} - {{ workout.get_sets }}</h2>
+  <h2><a href="{% url 'session_detail' workout.session.pk %}">{{workout.session.date }}</a></h2>
+  <h3>{{ workout.exercise.name }} {{ workout.get_working_weight }} - {{ workout.get_sets }}</h3>
 
-  <h3>Next Workout Goals = {{ workout.get_next_workout_choices }}</h3>
+  <h4>Next Workout Goals = {{ workout.get_next_workout_choices }}</h4>
 
 
   <form action="" method="post">
@@ -28,8 +29,8 @@
     <div>
       <p>
         1x{{ set.reps }} 
-        <a href="{% url 'set_edit' set.pk %}">Edit Set</a> | 
-        <a href="{% url 'set_delete' set.pk %}">Delete Set</a>
+        <a href="{% url 'set_edit' set.pk %}" class="secondary-link-button">Edit Set</a> 
+        <a href="{% url 'set_delete' set.pk %}" class="negative-link-button">Delete Set</a>
       </p>
     </div>
   {% endfor %}
@@ -40,6 +41,6 @@
 
   <br><br>
 
-  <a href="{% url 'workout_delete' workout.pk %}">Delete This Workout</a>
+  <a href="{% url 'workout_delete' workout.pk %}" class="negative-link-button">Delete Workout</a>
 
 {% endblock %}

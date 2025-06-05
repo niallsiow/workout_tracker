@@ -3,6 +3,7 @@
     --background: #FCFCFC;
     --primary: #1cc0e9;
     --secondary: #b7d3c1;
+    --negative: #d1694f;
 }
 
 * {
@@ -50,6 +51,23 @@ p {
 
 .secondary-link-button:active {
     background-color: rgb(220, 240, 230);
+}
+
+.negative-link-button {
+    display: inline-block;
+    border: none;
+    background-color: var(--negative);
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+.negative-link-button:hover {
+    background-color: rgb(220, 118, 100);
+}
+
+.negative-link-button:active {
+    background-color: rgb(240, 144, 120);
 }
 
 .logged-in-nav {

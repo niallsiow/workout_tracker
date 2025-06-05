@@ -16,15 +16,17 @@
     {% csrf_token %}
     {{ workout_new_form }}
 
+    <button type="submit" class="primary-link-button">Save</button>
+    
     {% for exercise in exercises %}
       <div id="exercise_{{ exercise.id }}_div" class="exercise_id_div" style="display: None;">
+        <h3>Last Workout:</h3>
         <p>Previous Weight: {{ exercise.get_latest_working_weight }}</p>
         <p>Previous Sets: {{ exercise.get_latest_sets }}</p>
         <p>{{ exercise.get_latest_workout_choices }}</p>
       </div>
     {% endfor %}
 
-    <button type="submit">Save</button>
   </form>
 
   <p>{{ session.date }}</p>
@@ -34,7 +36,7 @@
     </div>
   {% endfor %}
 
-  <a href="{% url 'session_delete' session.pk %}">Delete Session</a>
+  <a href="{% url 'session_delete' session.pk %}" class="negative-link-button">Delete Session</a>
 
 
   <script>
