@@ -19,7 +19,7 @@
       {% if session.user.pk == request.user.pk %}
         <a href="{{ session.get_absolute_url }}"><h3>{{ session.date }}</h3></a>
         {% for workout in session.workout_set.all %}
-          <p>{{ workout.exercise }}: {{ workout.get_working_weight }} - {{ workout.get_sets }}</p>
+          <p>{{ workout.exercise.name }}: {{ workout.get_working_weight }} - {{ workout.get_sets }}</p>
         {% endfor %}
         <p>{{ session.notes }}</p>
       {% endif %}

@@ -5,7 +5,8 @@
   {% for exercise in exercise_list %}
     {% if exercise.user == request.user %}
       <h2>{{ exercise.name }}</h2>
-      <p>Previous Working Weight: {{ exercise.get_previous_working_weight }}</p>
+      <p>Previous Working Weight: {{ exercise.get_latest_working_weight }}</p>
+      <p>{{ exercise.get_latest_workout_choices }}</p>
       <a href="{% url 'exercise_detail' exercise.id %}">View History</a> | 
       <a href="{% url 'exercise_edit' exercise.id %}">Edit Name</a> | 
       <a href="{% url 'exercise_delete' exercise.id %}">Delete Exercise</a>

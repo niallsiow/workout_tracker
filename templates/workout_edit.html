@@ -3,7 +3,7 @@
 {% block content %}
 
   
-  <h2><a href="{% url 'session_detail' workout.session.pk %}">{{workout.session.date }}</a>: {{ workout.exercise }} {{ workout.get_working_weight }} - {{ workout.get_sets }}</h2>
+  <h2><a href="{% url 'session_detail' workout.session.pk %}">{{workout.session.date }}</a>: {{ workout.exercise.name }} {{ workout.get_working_weight }} - {{ workout.get_sets }}</h2>
 
   <h3>Next Workout Goals = {{ workout.get_next_workout_choices }}</h3>
 

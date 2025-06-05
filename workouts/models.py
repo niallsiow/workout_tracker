@@ -23,15 +23,20 @@ class Exercise(models.Model):
     user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
 
-    def get_previous_working_weight(self):
+    def get_latest_working_weight(self):
         last_workout = Workout.objects.filter(exercise=self.id).last()
         if last_workout:
             return last_workout.get_working_weight()
         return "0kg"
-
+    
+    def get_latest_workout_choices(self):
+        last_workout = Workout.objects.filter(exercise=self.id).last()
+        if last_workout:
+            return last_workout.get_next_workout_choices()
+        return "Goal For Next Workout = N/A"
 
     def __str__(self):
-        return self.name
+        return f"{self.name} {self.get_latest_working_weight()}"
 
 
 class Workout(models.Model):

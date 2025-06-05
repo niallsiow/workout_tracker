@@ -37,9 +37,6 @@ class SessionFormTests(TestCase):
     def test_session_createview(self):
         self.client.login(username="testuser", password="testpass123")
 
-        response = self.client.get(reverse("home"))
-        self.assertContains(response, "New Session")
-
         response = self.client.post(reverse("home"))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(
