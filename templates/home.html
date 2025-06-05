@@ -17,16 +17,19 @@
     
     {% for session in session_list reversed %}
       {% if session.user.pk == request.user.pk %}
-      <div class="session-card">
-        <h3><a href="{{ session.get_absolute_url }}">{{ session.date }}</a></h3>
-        <div class="session-card-content">  
-          {% for workout in session.workout_set.all %}
-          <p>{{ workout.exercise.name }}: {{ workout.get_working_weight }} - {{ workout.get_sets }}</p>
-          {% endfor %}
-          <p>{{ session.notes }}</p>
+        <div class="session-card {% if session.is_today %}todays-session{% endif %}">
+          {% if session.is_today %}
+            <h2>Today's Workout</h2>
+          {% endif %}
+          <h3><a href="{{ session.get_absolute_url }}">{{ session.date }}</a></h3>
+          <div class="session-card-content">  
+            {% for workout in session.workout_set.all %}
+            <p>{{ workout.exercise.name }}: {{ workout.get_working_weight }} - {{ workout.get_sets }}</p>
+            {% endfor %}
+            <p>{{ session.notes }}</p>
+          </div>
         </div>
-      </div>
-        {% endif %}
+      {% endif %}
     {% endfor %}
   {% endif %}
 

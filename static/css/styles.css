@@ -78,3 +78,8 @@ p {
 .session-card-content > * {
     margin: 0px;
 }
+
+.todays-session {
+    border-style: solid;
+    text-align: center;
+}
