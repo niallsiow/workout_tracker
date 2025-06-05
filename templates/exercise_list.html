@@ -4,11 +4,11 @@
 
   {% for exercise in exercise_list %}
     {% if exercise.user == request.user %}
-      <p>{{ exercise.name }} 
-        <a href="{% url 'exercise_detail' exercise.id %}">View</a> | 
-        <a href="{% url 'exercise_edit' exercise.id %}">Edit</a> | 
-        <a href="{% url 'exercise_delete' exercise.id %}">Delete</a>
-      </p>
+      <h2>{{ exercise.name }}</h2>
+      <p>Previous Working Weight: {{ exercise.get_previous_working_weight }}</p>
+      <a href="{% url 'exercise_detail' exercise.id %}">View History</a> | 
+      <a href="{% url 'exercise_edit' exercise.id %}">Edit Name</a> | 
+      <a href="{% url 'exercise_delete' exercise.id %}">Delete Exercise</a>
     {% endif %}
   {% endfor %}
 
