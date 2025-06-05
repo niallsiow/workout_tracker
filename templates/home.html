@@ -3,11 +3,15 @@
 {% block content %}
 
   {% if user.is_authenticated %}
-    <form action="" method="post">
-      {% csrf_token %}
-      {{ form }}
-      <button type="submit">New Session</button>
-    </form>
+    {% if last_session.is_today %}
+      <a href="{{ last_session.get_absolute_url }}">Today's Workout</a>
+    {% else %}
+      <form action="" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">New Session</button>
+      </form>
+    {% endif %}
     
     <h2>Workout Sessions</h2>
     

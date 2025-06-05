@@ -1,11 +1,16 @@
 from django.db import models
 from django.urls import reverse
+from datetime import date
 
 
 class Session(models.Model):
     user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
     notes = models.TextField(blank=True)
+
+    def is_today(self):
+        return self.date == date.today()
+
 
     def get_absolute_url(self):
         return reverse("session_detail", kwargs={"pk": self.id})

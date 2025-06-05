@@ -16,6 +16,9 @@ class SessionListViewGet(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["form"] = SessionCreateForm()
+
+        last_session = Session.objects.last()
+        context["last_session"] = last_session
         return context
 
 
