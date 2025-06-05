@@ -26,13 +26,12 @@ class SessionFormTests(TestCase):
         cls.user = get_user_model().objects.create_user(
             username="testuser", email="testuser@email.com", password="testpass123"
         )
-        cls.session = Session.objects.create(user=cls.user, notes="some notes")
+        cls.session = Session.objects.create(user=cls.user)
 
     def test_session_model_content(self):
         test_session = Session.objects.last()
         self.assertEqual(test_session.user.username, "testuser")
         self.assertEqual(test_session.user.email, "testuser@email.com")
-        self.assertEqual(test_session.notes, "some notes")
 
     def test_session_createview(self):
         self.client.login(username="testuser", password="testpass123")
@@ -47,7 +46,7 @@ class SessionFormTests(TestCase):
 
     def test_session_deleteview(self):
         self.client.login(username="testuser", password="testpass123")
-        new_session = Session.objects.create(user=self.user, notes="new notes")
+        new_session = Session.objects.create(user=self.user)
         self.assertTrue(Session.objects.filter(id=new_session.id).exists())
 
         response = self.client.get(
@@ -70,7 +69,7 @@ class SessionDetailViewTests(TestCase):
         cls.user = get_user_model().objects.create_user(
             username="testuser", email="testuser@email.com", password="testpass123"
         )
-        cls.session = Session.objects.create(user=cls.user, notes="some notes")
+        cls.session = Session.objects.create(user=cls.user)
 
     def test_url_exists_at_correct_location_sessiondetailview(self):
         self.client.login(username="testuser", password="testpass123")
@@ -95,7 +94,7 @@ class WorkoutFormTests(TestCase):
         cls.user = get_user_model().objects.create_user(
             username="testuser", email="testuser@email.com", password="testpass123"
         )
-        cls.session = Session.objects.create(user=cls.user, notes="some notes")
+        cls.session = Session.objects.create(user=cls.user)
         cls.exercise = Exercise.objects.create(user=cls.user, name="Deadlift")
         cls.workout = Workout.objects.create(
             session=cls.session, exercise=cls.exercise, working_weight=100
@@ -103,7 +102,6 @@ class WorkoutFormTests(TestCase):
 
     def test_workout_model_content(self):
         test_workout = Workout.objects.last()
-        self.assertEqual(test_workout.session.notes, "some notes")
         self.assertEqual(test_workout.exercise.name, "Deadlift")
         self.assertEqual(test_workout.working_weight, 100)
 

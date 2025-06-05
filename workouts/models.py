@@ -6,7 +6,6 @@ from datetime import date
 class Session(models.Model):
     user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
     date = models.DateField(auto_now_add=True)
-    notes = models.TextField(blank=True)
 
     def is_today(self):
         return self.date == date.today()
