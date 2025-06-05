@@ -2,15 +2,6 @@
 
 {% block content %}
 
-  <h2>Notes</h2>
-  {% if session.notes %}
-    <p style="white-space: pre;">{{ session.notes }}</p>
-  {% endif %}
-
-  <a href="{% url 'session_edit' session.pk %}">Edit Notes</a>
-
-
-  <br><br>
 
   <form action="" method="post">
     {% csrf_token %}

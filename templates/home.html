@@ -26,7 +26,6 @@
             {% for workout in session.workout_set.all %}
             <p>{{ workout.exercise.name }}: {{ workout.get_working_weight }} - {{ workout.get_sets }}</p>
             {% endfor %}
-            <p>{{ session.notes }}</p>
           </div>
         </div>
       {% endif %}

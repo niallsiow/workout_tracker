@@ -45,32 +45,6 @@ class SessionFormTests(TestCase):
         )
         self.assertEqual(Session.objects.last().date, date.today())
 
-    def test_session_updateview(self):
-        self.client.login(username="testuser", password="testpass123")
-        session = Session.objects.last()
-
-        response = self.client.get(reverse("session_detail", kwargs={"pk": session.id}))
-        self.assertContains(response, "Edit Notes")
-
-        response = self.client.get(reverse("session_edit", kwargs={"pk": session.id}))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "session_edit.html")
-        self.assertContains(response, "some notes")
-
-        response = self.client.post(
-            reverse("session_edit", kwargs={"pk": session.id}),
-            {"notes": "edited notes"},
-        )
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(
-            response, reverse("session_detail", kwargs={"pk": session.id})
-        )
-        session = Session.objects.last()
-        self.assertEqual(session.notes, "edited notes")
-
-        response = self.client.get(reverse("session_detail", kwargs={"pk": session.id}))
-        self.assertContains(response, "edited notes")
-
     def test_session_deleteview(self):
         self.client.login(username="testuser", password="testpass123")
         new_session = Session.objects.create(user=self.user, notes="new notes")
@@ -113,7 +87,6 @@ class SessionDetailViewTests(TestCase):
         self.assertContains(
             response, date_format(date.today(), format=settings.DATE_FORMAT)
         )
-        self.assertContains(response, "some notes")
 
 
 class WorkoutFormTests(TestCase):
