@@ -12,17 +12,20 @@
   <body>
     <a href="{% url 'home' %}"><h1 class="heading">Workouts</h1></a>
     {% if user.is_authenticated %}
-      <p>Hi {{ user.username }}</p>
-      
-      <form action="{% url 'logout' %}" method="post">
-        {% csrf_token %}
-        <button type="submit">Log Out</button>
-      </form>
+
+      <div class="logged-in-nav">
+        <p>Hi {{ user.username }}</p>
+        
+        <form action="{% url 'logout' %}" method="post">
+          {% csrf_token %}
+          <button type="submit">Log Out</button>
+        </form>
+      </div>
 
       <br>
 
-      <a href="{% url 'exercise_list' %}">View All Exercises</a> | 
-      <a href="{% url 'exercise_new' %}">New Exercise</a>
+      <a href="{% url 'exercise_list' %}" class="primary-link-button">View All Exercises</a> 
+      <a href="{% url 'exercise_new' %}" class="secondary-link-button">New Exercise</a>
       
       {% else %}
         <p>You are not logged in.</p>

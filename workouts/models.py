@@ -28,6 +28,13 @@ class Exercise(models.Model):
         if last_workout:
             return last_workout.get_working_weight()
         return "0kg"
+
+    def get_latest_sets(self):
+        last_workout = Workout.objects.filter(exercise=self.id).last()
+        if last_workout:
+            return last_workout.get_sets()
+        return "N/A"
+
     
     def get_latest_workout_choices(self):
         last_workout = Workout.objects.filter(exercise=self.id).last()

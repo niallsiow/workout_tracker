@@ -18,7 +18,9 @@
 
     {% for exercise in exercises %}
       <div id="exercise_{{ exercise.id }}_div" class="exercise_id_div" style="display: None;">
-        <p>{{ exercise.get_latest_working_weight }}, {{ exercise.get_latest_workout_choices }}</p>
+        <p>Previous Weight: {{ exercise.get_latest_working_weight }}</p>
+        <p>Previous Sets: {{ exercise.get_latest_sets }}</p>
+        <p>{{ exercise.get_latest_workout_choices }}</p>
       </div>
     {% endfor %}
 
@@ -29,14 +31,6 @@
   {% for workout in session.workout_set.all %}
     <div>
       <h3><a href="{% url 'workout_edit' workout.pk %}">{{ workout.exercise.name }} - {{ workout.get_working_weight }} - {{ workout.get_sets }}</a></h3>
-
-      {% if workout.get_previous_workout %}
-        <h4>Previous Workout: {{ workout.get_previous_workout.get_working_weight }} - {{ workout.get_previous_workout.get_sets }} 
-          , {{ workout.get_previous_workout.get_next_workout_choices }}</h4>
-      {% else %}
-        <h4>No Previous Workout</h4>
-      {% endif %}
-
     </div>
   {% endfor %}
 

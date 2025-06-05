@@ -4,12 +4,12 @@
 
   {% if user.is_authenticated %}
     {% if last_session.is_today %}
-      <a href="{{ last_session.get_absolute_url }}">Today's Workout</a>
+      <a href="{{ last_session.get_absolute_url }}" class="primary-link-button">Today's Workout</a>
     {% else %}
       <form action="" method="post">
         {% csrf_token %}
         {{ form }}
-        <button type="submit">New Session</button>
+        <button type="submit" class="primary-link-button">New Session</button>
       </form>
     {% endif %}
     
@@ -17,12 +17,16 @@
     
     {% for session in session_list reversed %}
       {% if session.user.pk == request.user.pk %}
-        <a href="{{ session.get_absolute_url }}"><h3>{{ session.date }}</h3></a>
-        {% for workout in session.workout_set.all %}
+      <div class="session-card">
+        <h3><a href="{{ session.get_absolute_url }}">{{ session.date }}</a></h3>
+        <div class="session-card-content">  
+          {% for workout in session.workout_set.all %}
           <p>{{ workout.exercise.name }}: {{ workout.get_working_weight }} - {{ workout.get_sets }}</p>
-        {% endfor %}
-        <p>{{ session.notes }}</p>
-      {% endif %}
+          {% endfor %}
+          <p>{{ session.notes }}</p>
+        </div>
+      </div>
+        {% endif %}
     {% endfor %}
   {% endif %}
 
