@@ -147,7 +147,7 @@ class WorkoutFormTests(TestCase):
         new_workout = Workout.objects.last()
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(
-            response, reverse("workout_detail", kwargs={"pk": new_workout.id})
+            response, reverse("workout_edit", kwargs={"pk": new_workout.id})
         )
         self.assertEqual(new_workout.working_weight, 50)
 

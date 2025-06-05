@@ -66,7 +66,7 @@ class WorkoutPost(FormView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("workout_detail", kwargs={"pk": self.workout.id})
+        return reverse("workout_edit", kwargs={"pk": self.workout.id})
 
 
 class SessionDetailViewGet(LoginRequiredMixin, UserPassesTestMixin, DetailView):
@@ -183,7 +183,7 @@ class SetUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def get_success_url(self):
         set = self.object
         workout = set.workout
-        return reverse("workout_detail", kwargs={"pk": workout.id})
+        return reverse("workout_edit", kwargs={"pk": workout.id})
 
 
 class SetDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -197,7 +197,7 @@ class SetDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def get_success_url(self):
         set = self.object
         workout = set.workout
-        return reverse("workout_detail", kwargs={"pk": workout.id})
+        return reverse("workout_edit", kwargs={"pk": workout.id})
 
 
 class ExerciseListView(LoginRequiredMixin, ListView):
