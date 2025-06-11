@@ -10,7 +10,6 @@ class Session(models.Model):
     def is_today(self):
         return self.date == date.today()
 
-
     def get_absolute_url(self):
         return reverse("session_detail", kwargs={"pk": self.id})
 

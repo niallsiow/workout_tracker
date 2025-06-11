@@ -17,8 +17,12 @@ class SessionListViewGet(ListView):
         context = super().get_context_data(**kwargs)
         context["form"] = SessionCreateForm()
 
-        last_session = Session.objects.last()
-        context["last_session"] = last_session
+        if not self.request.user.is_anonymous:
+            last_session = Session.objects.filter(user=self.request.user).last()
+            context["last_session"] = last_session
+        else:
+            context["last_session"] = "N/A"
+        
         return context
 
 
